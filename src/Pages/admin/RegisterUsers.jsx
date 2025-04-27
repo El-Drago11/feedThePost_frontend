@@ -19,10 +19,13 @@ const RegisterUsers = () => {
     const DeleteUserDetails = (data) => {
         setConfirmationModal({
             text1: "Are you sure ?",
-            text2: "The post will deleted permanently!",
+            text2: "User All data will be deleted permanently!",
             btn1Text: "Sure",
             btn2Text: "Cancel",
-            btn1Handler: () =>console.log(data),
+            btn1Handler: () =>{
+                console.log(data);
+                setConfirmationModal(null)
+            },
             btn2Handler: () => setConfirmationModal(null)
         })
     }
