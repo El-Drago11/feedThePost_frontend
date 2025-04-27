@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../store/authReducer";
 
 const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null }) => {
+    const [inputValue, setInputValue] = useState('');
 
-    const {loading } = useSelector((store) => store.auth)
     const dispatch = useDispatch()
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -21,6 +21,15 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
         setSelectedHashTag([...selectedHashTag, { value: selectedValue }]);
         e.target.value = "";
     }
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        if (value.endsWith(' ')) {
+          assignHashTags(value);
+        } else {
+          setInputValue(value);
+        }
+      };
 
     const removeHashTag = (tagName) => {
         const userlist = selectedHashTag.filter((curr) => curr.value != tagName)
@@ -66,11 +75,7 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
                     </label>
                     <label>
                         <p className=' text-black text-sm mt-4 font-semibold'>HashTags<sup className="text-red-600 ml-1">Press Space to submit tag</sup></p>
-                        <input type='text' name='hashTag' placeholder='Enter your hashtag' className='px-2 bg-slate-400 w-full rounded-md py-1' onKeyDown={(e)=>{
-                            if(e.code==='Space'|| e.code==='Enter'){
-                                assignHashTags(e)
-                            }
-                        }}/>
+                        <input type='text' name='hashTag' placeholder='Enter your hashtag' className='px-2 bg-slate-400 w-full rounded-md py-1'onChange={handleInputChange} value={inputValue}/>
                         {
                             selectedHashTag.length != 0 ?
                                 <div className="flex flex-row gap-2 mt-2 flex-wrap">
