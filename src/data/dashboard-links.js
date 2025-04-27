@@ -7,6 +7,7 @@ export const sidebarLinks = [
     id: 1,
     name: "My Profile",
     path: "/dashboard/my-profile",
+    type: ACCOUNT_TYPE.User,
     icon: "VscAccount",
   },
   {
@@ -25,13 +26,20 @@ export const sidebarLinks = [
   },
   {
     id: 4,
+    name: "Admin Profile",
+    path: "/admin/my-profile",
+    type: ACCOUNT_TYPE.Amdin,
+    icon: "VscAccount",
+  },
+  {
+    id: 5,
     name: "Feeds",
     path: "/admin/Feeds",
     type: ACCOUNT_TYPE.Amdin,
     icon: "VscVm",
   },
   {
-    id: 5,
+    id: 6,
     name: "Users",
     path: "/admin/Users",
     type: ACCOUNT_TYPE.Amdin,
