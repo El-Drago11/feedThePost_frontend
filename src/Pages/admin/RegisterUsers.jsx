@@ -56,7 +56,7 @@ const RegisterUsers = () => {
 
     return (
         <div className='p-4 md:p-7 w-[100%] overflow-hidden'>
-            <h1 className='text-2xl text-center'>Assignments</h1>
+            <h1 className='text-2xl text-center'>Register Users</h1>
             <div className="flex flex-col items-center justify-around h-[97%]">
                 <div className="overflow-auto w-full px-5">
                     <table className="w-full my-5 text-center">
