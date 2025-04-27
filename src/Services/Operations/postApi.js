@@ -7,7 +7,9 @@ export const createPostAPI = async(data)=>{
     const toastId = toast.loading('Creating post....');
     const {description,mediaFile,list} = data;
 
-    const newList = list.map((curr)=>curr.value)
+    const newList = list.map((curr)=>curr)
+
+    console.log(newList)
 
     let response;
     try {

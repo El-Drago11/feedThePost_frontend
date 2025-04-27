@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../store/authReducer";
 
 const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null }) => {
-    const [inputValue, setInputValue] = useState('');
 
+    const {loading } = useSelector((store) => store.auth)
     const dispatch = useDispatch()
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -22,15 +22,6 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
         e.target.value = "";
     }
 
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        if (value.endsWith(' ')) {
-          assignHashTags(value);
-        } else {
-          setInputValue(value);
-        }
-      };
-
     const removeHashTag = (tagName) => {
         const userlist = selectedHashTag.filter((curr) => curr.value != tagName)
         setSelectedHashTag([...userlist])
@@ -38,12 +29,13 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
 
     const userAssigment = async (data) => {
         dispatch(setLoading(true))
-        if(!selectedHashTag.length){
+        const hashtags = data.hashTag.split(' ').map(tag => tag.replace(/^#/, '')).filter(tag => tag.length > 0);    
+        if(!hashtags.length){
             toast.error('Please enter atleast one hashTag');
             dispatch(setLoading(false))
             return;
         }
-        data.list = [...selectedHashTag]
+        data.list = [...hashtags]
         await createPostAPI(data)
         setConfirmationModal(null)
         dispatch(setLoading(false))
@@ -66,7 +58,7 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
                 <form onSubmit={handleSubmit(userAssigment)}>
                     <label>
                         <textarea required type='description' name='description' placeholder='Enter Post description' className='px-2 bg-slate-400 w-full rounded-md py-1 mt-7' {...register('description', {
-                            required: true,
+                            
                             validate: (value) => {
                                 const val = value.trim().length;
                                 return val > 0 || "Field cannot be empty";
@@ -75,9 +67,12 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
                         {errors.description && <span className="text-red-500 text-sm">{errors.description.message || 'This field is required'}</span>}
                     </label>
                     <label>
-                        <p className=' text-black text-sm mt-4 font-semibold'>HashTags<sup className="text-red-600 ml-1">Press Space to submit tag</sup></p>
-                        <input type='text' name='hashTag' placeholder='Enter your hashtag' className='px-2 bg-slate-400 w-full rounded-md py-1'onChange={handleInputChange} value={inputValue}/>
-                        {
+                        <p className=' text-black text-sm mt-4 font-semibold'>HashTags
+                            <sup className="text-red-600 ml-1">A space between two hashtag</sup>
+                        </p>
+                        <input type='text' name='hashTag' placeholder='Enter your hashtag' className='px-2 bg-slate-400 w-full rounded-md py-1' {...register('hashTag',{required: true,})}/>
+                        {errors.hashTag && <span className="text-red-500 text-sm">{errors.hashTag.message || 'This field is required'}</span>}
+                        {/* {
                             selectedHashTag.length != 0 ?
                                 <div className="flex flex-row gap-2 mt-2 flex-wrap">
                                     {
@@ -92,7 +87,7 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
                                     }
                                 </div>
                                 : <></>
-                        }
+                        } */}
 
                     </label>
                     <label>
