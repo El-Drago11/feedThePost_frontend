@@ -40,6 +40,7 @@ const FromModaldata = ({ modalData, setConfirmationModal,getSelectedTask=null })
         dispatch(setLoading(true))
         if(!selectedHashTag.length){
             toast.error('Please enter atleast one hashTag');
+            dispatch(setLoading(true))
             return;
         }
         data.list = [...selectedHashTag]
