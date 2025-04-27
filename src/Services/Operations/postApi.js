@@ -4,7 +4,7 @@ import { commentEndpoints, postEndpoints } from "../apis";
 
 
 export const createPostAPI = async(data)=>{
-    const toastId = toast.loading('Creating task....');
+    const toastId = toast.loading('Creating post....');
     const {description,mediaFile,list} = data;
 
     const newList = list.map((curr)=>curr.value)
@@ -20,7 +20,7 @@ export const createPostAPI = async(data)=>{
             response = res;
         }
     } catch (error) {
-        toast.error('Unable to add task...')
+        toast.error('Unable to add post...')
         console.error("API Error:", error.response ? error.response.data : error.message);
     }
     toast.dismiss(toastId);
@@ -28,7 +28,7 @@ export const createPostAPI = async(data)=>{
 }
 
 export const postLikeAPI = async(postId)=>{
-    const toastId = toast.loading('Creating task....');
+    const toastId = toast.loading('Liking Post....');
 
     let response;
     try {
@@ -37,7 +37,7 @@ export const postLikeAPI = async(postId)=>{
             response = res;
         }
     } catch (error) {
-        toast.error('Unable to like task...')
+        toast.error('Unable to like post...')
         console.error("API Error:", error.response ? error.response.data : error.message);
     }
     toast.dismiss(toastId);
@@ -45,7 +45,7 @@ export const postLikeAPI = async(postId)=>{
 }
 
 export const deleteTaskAPI = async(taskId)=>{
-    const toastId = toast.loading('Creating task....');
+    const toastId = toast.loading('deleting post....');
     let response;
     try {
         const res = await apiConnector('DELETE',postEndpoints.DELETE_POST,{taskId});
@@ -53,7 +53,7 @@ export const deleteTaskAPI = async(taskId)=>{
             response = res;
         }
     } catch (error) {
-        toast.error('Unable to delete task...')
+        toast.error('Unable to delete post...')
         console.error("API Error:", error.response ? error.response.data : error.message);
     }
     toast.dismiss(toastId);
@@ -61,7 +61,7 @@ export const deleteTaskAPI = async(taskId)=>{
 }
 
 export const createdPostAPI = async(pageNo)=>{
-    const toastId = toast.loading('Fetching task....');
+    const toastId = toast.loading('Fetching post....');
     let response;
     try {
         const res = await apiConnector('GET',postEndpoints.CREATED_POST,null,null,{pageNo});
@@ -69,7 +69,7 @@ export const createdPostAPI = async(pageNo)=>{
             response = res;
         }
     } catch (error) {
-        toast.error('Unable to fetch task...')
+        toast.error('Unable to fetch post...')
         console.error("API Error:", error.response ? error.response.data : error.message);
     }
     toast.dismiss(toastId);
@@ -77,7 +77,7 @@ export const createdPostAPI = async(pageNo)=>{
 }
 
 export const getComments = async(postId)=>{
-    const toastId = toast.loading('Fetching task....');
+    const toastId = toast.loading('Fetching comments....');
     let response;
     try {
         const res = await apiConnector('POST',commentEndpoints.GET_COMMENT,{postId});
@@ -85,7 +85,7 @@ export const getComments = async(postId)=>{
             response = res;
         }
     } catch (error) {
-        toast.error('Unable to fetch task...')
+        toast.error('Unable to fetch comments...')
         console.error("API Error:", error.response ? error.response.data : error.message);
     }
     toast.dismiss(toastId);
@@ -93,7 +93,7 @@ export const getComments = async(postId)=>{
 }
 
 export const postTheComments = async(postId,userComment)=>{
-    const toastId = toast.loading('Fetching task....');
+    const toastId = toast.loading('Posting comment....');
     let response;
     try {
         const res = await apiConnector('POST',commentEndpoints.POST_THE_COMMENT,{postId,userComment});
@@ -101,7 +101,7 @@ export const postTheComments = async(postId,userComment)=>{
             response = res;
         }
     } catch (error) {
-        toast.error('Unable to fetch task...')
+        toast.error('Unable to post the comment...')
         console.error("API Error:", error.response ? error.response.data : error.message);
     }
     toast.dismiss(toastId);
